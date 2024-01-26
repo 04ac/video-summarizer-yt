@@ -14,7 +14,11 @@ class VideoSummarySuccessState extends VideoSummaryState {
   VideoSummarySuccessState({required this.summary});
 }
 
-class VideoSummaryErrorState extends VideoSummaryState {}
+class VideoSummaryErrorState extends VideoSummaryState {
+  final String message;
+
+  VideoSummaryErrorState({required this.message});
+}
 
 class GetTranscriptLoadingState extends VideoSummaryState {}
 

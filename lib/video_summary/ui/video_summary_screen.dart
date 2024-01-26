@@ -97,9 +97,18 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   ),
                 );
               case VideoSummaryErrorState:
-                return const Center(
+                return Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  child: Center(
                     child: Text(
-                        "An error occurred... Please enter a valid URL or try again after some time."));
+                      (state as VideoSummaryErrorState).message,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ),
+                );
               case VideoSummarySuccessState:
                 final successState = state as VideoSummarySuccessState;
                 return Center(

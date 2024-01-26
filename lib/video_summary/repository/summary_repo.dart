@@ -40,40 +40,26 @@ class SummaryRepo {
       },
     };
 
-    try {
-      var response = await client.post(Uri.parse(API_URL),
-          headers: headers, body: jsonEncode(payload));
+    var response = await client.post(Uri.parse(API_URL),
+        headers: headers, body: jsonEncode(payload));
 
-      var result = jsonDecode(response.body);
+    var result = jsonDecode(response.body);
 
-      return result[0]["summary_text"];
-    } catch (e) {
-      log(e.toString());
-      return "Summary Not Generated.";
-    }
+    return result[0]["summary_text"];
   }
 
   // https://www.youtube.com/watch?v=VaXpJm7b-m8
   static Future<String> getTranscript(String videoUrl) async {
     String? extractedId = YoutubePlayer.convertUrlToId(videoUrl);
 
-    if (extractedId == null) {
-      return "Transcript Not Available";
-    }
-
     String API_URL = "${Secrets.TRANSCRIPT_API}$extractedId";
 
     var client = http.Client();
 
-    try {
-      var response = await client.get(Uri.parse(API_URL));
+    var response = await client.get(Uri.parse(API_URL));
 
-      var result = jsonDecode(response.body);
+    var result = jsonDecode(response.body);
 
-      return result["transcript"];
-    } catch (e) {
-      log(e.toString());
-      return "Transcript Not Available";
-    }
+    return result["transcript"];
   }
 }

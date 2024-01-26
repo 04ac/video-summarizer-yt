@@ -19,10 +19,18 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
   FutureOr<void> summaryFetchEvent(
       SummaryFetchEvent event, Emitter<VideoSummaryState> emit) async {
     emit(VideoSummaryLoadingState());
-    String summary = await SummaryRepo.getSummaryMultiplePortions(
-        "https://api-inference.huggingface.co/models/${event.selectedModel}",
-        event.transcript,
-        event.partitionNum);
+    String summary = "";
+    try {
+      summary = await SummaryRepo.getSummaryMultiplePortions(
+          "https://api-inference.huggingface.co/models/${event.selectedModel}",
+          event.transcript,
+          event.partitionNum);
+    } catch (e) {
+      emit(VideoSummaryErrorState(
+          message:
+              "Oops! An error occurred\nSummary not generated. Please try again after some time."));
+      return;
+    }
     emit(
       VideoSummarySuccessState(
         summary: SummaryDataModel(
@@ -41,7 +49,10 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
     try {
       transcript = await SummaryRepo.getTranscript(event.videoUrl);
     } catch (e) {
-      emit(VideoSummaryErrorState());
+      emit(VideoSummaryErrorState(
+          message:
+              "Oops! An error occurred\nPlease enter a valid URL\n(video must contain subtitles)"));
+      return;
     }
     // Regex to remove non-printable characters
     add(SummaryFetchEvent(
