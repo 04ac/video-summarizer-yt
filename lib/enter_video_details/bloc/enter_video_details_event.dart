@@ -10,3 +10,9 @@ class ModelDropdownChangeEvent extends EnterVideoDetailsEvent {
 }
 
 class FieldsNotFilledErrorEvent extends EnterVideoDetailsEvent {}
+
+class SliderSlideEvent extends EnterVideoDetailsEvent {
+  final double newVal;
+
+  SliderSlideEvent({required this.newVal});
+}

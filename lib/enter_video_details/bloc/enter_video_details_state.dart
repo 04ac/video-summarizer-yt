@@ -14,3 +14,9 @@ class ModelSelectedState extends EnterVideoDetailsState {
 }
 
 class FieldsNotFilledState extends EnterVideoDetailsState {}
+
+class SliderSlideState extends EnterVideoDetailsState {
+  final double newVal;
+
+  SliderSlideState({required this.newVal});
+}

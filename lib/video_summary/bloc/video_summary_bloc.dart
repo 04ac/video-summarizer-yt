@@ -21,7 +21,8 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
     emit(VideoSummaryLoadingState());
     String summary = await SummaryRepo.getSummaryMultiplePortions(
         "https://api-inference.huggingface.co/models/${event.selectedModel}",
-        event.transcript);
+        event.transcript,
+        event.partitionNum);
     emit(
       VideoSummarySuccessState(
         summary: SummaryDataModel(
@@ -47,6 +48,7 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
       transcript: transcript.replaceAll(RegExp(r'[^ -~\t\n\r]'), ''),
       videoUrl: event.videoUrl,
       selectedModel: event.selectedModel,
+      partitionNum: event.partitionNum,
     ));
   }
 }

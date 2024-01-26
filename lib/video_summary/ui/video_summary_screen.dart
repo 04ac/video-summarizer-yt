@@ -6,8 +6,12 @@ import '../bloc/video_summary_bloc.dart';
 class SummaryScreen extends StatefulWidget {
   final String ytVideoUrl;
   final String selectedModel;
+  final double partitionNum;
   const SummaryScreen(
-      {super.key, required this.ytVideoUrl, required this.selectedModel});
+      {super.key,
+      required this.ytVideoUrl,
+      required this.selectedModel,
+      required this.partitionNum});
 
   @override
   State<SummaryScreen> createState() => _SummaryScreenState();
@@ -22,6 +26,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     _summaryBloc.add(GetTranscriptEvent(
       videoUrl: widget.ytVideoUrl,
       selectedModel: widget.selectedModel,
+      partitionNum: widget.partitionNum,
     ));
     super.initState();
   }

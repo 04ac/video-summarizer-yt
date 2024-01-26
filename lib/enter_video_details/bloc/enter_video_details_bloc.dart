@@ -8,10 +8,12 @@ part 'enter_video_details_state.dart';
 
 class EnterVideoDetailsBloc
     extends Bloc<EnterVideoDetailsEvent, EnterVideoDetailsState> {
-  String dropdownValue = "";
+  String dropdownValue = "Please choose a model";
+  double sliderValue = -1500.0;
   EnterVideoDetailsBloc() : super(EnterVideoDetailsInitial()) {
     on<ModelDropdownChangeEvent>(modelDropdownChangeEvent);
     on<FieldsNotFilledErrorEvent>(fieldsNotFilledErrorEvent);
+    on<SliderSlideEvent>(sliderSlideEvent);
   }
 
   FutureOr<void> modelDropdownChangeEvent(
@@ -23,5 +25,11 @@ class EnterVideoDetailsBloc
   FutureOr<void> fieldsNotFilledErrorEvent(
       FieldsNotFilledErrorEvent event, Emitter<EnterVideoDetailsState> emit) {
     emit(FieldsNotFilledState());
+  }
+
+  FutureOr<void> sliderSlideEvent(
+      SliderSlideEvent event, Emitter<EnterVideoDetailsState> emit) {
+    sliderValue = event.newVal;
+    emit(SliderSlideState(newVal: event.newVal));
   }
 }

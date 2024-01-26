@@ -6,16 +6,17 @@ import 'package:video_summariser_yt/secrets.dart';
 
 class SummaryRepo {
   static Future<String> getSummaryMultiplePortions(
-      String url, String transcript) async {
+      String url, String transcript, double partitionNum) async {
     String summary = '';
+    int pNumInt = partitionNum.round();
 
-    for (int i = 0; i <= transcript.length ~/ 1000; i++) {
+    for (int i = 0; i <= transcript.length ~/ pNumInt; i++) {
       String summaryText = await getSummary(
           url,
           transcript.substring(
-              i * 1000,
-              (i + 1) * 1000 < transcript.length
-                  ? (i + 1) * 1000
+              i * pNumInt,
+              (i + 1) * pNumInt < transcript.length
+                  ? (i + 1) * pNumInt
                   : transcript.length));
 
       summary += '$summaryText\n\n';
