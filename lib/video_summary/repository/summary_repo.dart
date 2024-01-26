@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:video_summariser_yt/secrets.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SummaryRepo {
   static Future<String> getSummaryMultiplePortions(
@@ -54,8 +55,7 @@ class SummaryRepo {
 
   // https://www.youtube.com/watch?v=VaXpJm7b-m8
   static Future<String> getTranscript(String videoUrl) async {
-    List<String> parts = videoUrl.split("=");
-    String? extractedId = parts.length > 1 ? parts[1] : null;
+    String? extractedId = YoutubePlayer.convertUrlToId(videoUrl);
 
     if (extractedId == null) {
       return "Transcript Not Available";

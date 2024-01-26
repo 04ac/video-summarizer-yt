@@ -45,9 +45,57 @@ class _SummaryScreenState extends State<SummaryScreen> {
           },
           builder: (context, state) {
             switch (state.runtimeType) {
+              case GetTranscriptLoadingState:
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
+                  width: double.maxFinite,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Hang on tight!\nFetching video transcript.",
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30),
+                      SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 6.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               case VideoSummaryLoadingState:
-                return const Center(
-                    child: CircularProgressIndicator.adaptive());
+                return const SizedBox(
+                  width: double.maxFinite,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Hang on tight!\nWe're generating your summary.",
+                        style: TextStyle(
+                          fontSize: 25,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30),
+                      SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: CircularProgressIndicator.adaptive(
+                          strokeWidth: 6.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               case VideoSummaryErrorState:
                 return const Center(
                     child: Text(

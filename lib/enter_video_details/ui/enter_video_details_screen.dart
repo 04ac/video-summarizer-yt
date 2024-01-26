@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_summariser_yt/data/hf_model_list.dart';
 import 'package:video_summariser_yt/video_summary/ui/video_summary_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart' as ytIframe;
+import 'package:youtube_player_iframe/youtube_player_iframe.dart' as yt_iframe;
 
 import '../bloc/enter_video_details_bloc.dart';
 
@@ -19,8 +19,8 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
   final _vidDetailsBloc = EnterVideoDetailsBloc();
   final _urltec = TextEditingController();
 
-  final _ytPlayerController = ytIframe.YoutubePlayerController(
-    params: const ytIframe.YoutubePlayerParams(
+  final _ytPlayerController = yt_iframe.YoutubePlayerController(
+    params: const yt_iframe.YoutubePlayerParams(
       mute: true,
       showControls: true,
       showFullscreenButton: true,
@@ -61,15 +61,20 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                   hintText: "Enter Video URL",
                 ),
                 controller: _urltec,
-                onEditingComplete: () {
-                  String vId = YoutubePlayer.convertUrlToId(
-                          "https://www.youtube.com/watch?v=BBAyRBTfsOU") ??
-                      "";
+                onChanged: (newVal) {
+                  String vId = YoutubePlayer.convertUrlToId(_urltec.text) ?? "";
                   _ytPlayerController.cueVideoById(videoId: vId);
                 },
               ),
               const SizedBox(
-                height: 40,
+                height: 20,
+              ),
+              yt_iframe.YoutubePlayer(
+                controller: _ytPlayerController,
+                aspectRatio: 16 / 9,
+              ),
+              const SizedBox(
+                height: 20,
               ),
               BlocBuilder<EnterVideoDetailsBloc, EnterVideoDetailsState>(
                 builder: (context, state) {
@@ -167,13 +172,6 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                       return const SizedBox();
                   }
                 },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ytIframe.YoutubePlayer(
-                controller: _ytPlayerController,
-                aspectRatio: 16 / 9,
               ),
             ],
           ),
