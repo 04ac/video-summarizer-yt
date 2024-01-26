@@ -9,7 +9,7 @@ class VideoSummaryInitial extends VideoSummaryState {}
 class VideoSummaryLoadingState extends VideoSummaryState {}
 
 class VideoSummarySuccessState extends VideoSummaryState {
-  final String summary;
+  final SummaryDataModel summary;
 
   VideoSummarySuccessState({required this.summary});
 }
@@ -20,6 +20,11 @@ class GetTranscriptLoadingState extends VideoSummaryState {}
 
 class GetTranscriptSuccessState extends VideoSummaryState {
   final String transcript;
+  final String videoUrl;
+  final String selectedModel;
 
-  GetTranscriptSuccessState({required this.transcript});
+  GetTranscriptSuccessState(
+      {required this.transcript,
+      required this.videoUrl,
+      required this.selectedModel});
 }

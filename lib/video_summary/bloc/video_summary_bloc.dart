@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:video_summariser_yt/video_summary/models/SummaryDataModel.dart';
 
 import '../repository/summary_repo.dart';
 
@@ -19,9 +20,17 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
       SummaryFetchEvent event, Emitter<VideoSummaryState> emit) async {
     emit(VideoSummaryLoadingState());
     String summary = await SummaryRepo.getSummaryMultiplePortions(
-        "https://api-inference.huggingface.co/models/sshleifer/distilbart-cnn-12-6",
+        "https://api-inference.huggingface.co/models/${event.selectedModel}",
         event.transcript);
-    emit(VideoSummarySuccessState(summary: summary));
+    emit(
+      VideoSummarySuccessState(
+        summary: SummaryDataModel(
+          summaryText: summary,
+          videoUrl: event.videoUrl,
+          selectedModel: event.selectedModel,
+        ),
+      ),
+    );
   }
 
   FutureOr<void> getTranscriptEvent(
@@ -34,6 +43,10 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
       emit(VideoSummaryErrorState());
     }
     // Regex to remove non-printable characters
-    add(SummaryFetchEvent(transcript.replaceAll(RegExp(r'[^ -~\t\n\r]'), '')));
+    add(SummaryFetchEvent(
+      transcript: transcript.replaceAll(RegExp(r'[^ -~\t\n\r]'), ''),
+      videoUrl: event.videoUrl,
+      selectedModel: event.selectedModel,
+    ));
   }
 }
