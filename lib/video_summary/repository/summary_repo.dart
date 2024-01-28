@@ -11,18 +11,23 @@ class SummaryRepo {
     String summary = '';
     int pNumInt = partitionNum.round();
 
+    List<Future<String>> futures = [];
+
     for (int i = 0; i <= transcript.length ~/ pNumInt; i++) {
-      String summaryText = await getSummary(
+      futures.add(getSummary(
           url,
           transcript.substring(
               i * pNumInt,
               (i + 1) * pNumInt < transcript.length
                   ? (i + 1) * pNumInt
-                  : transcript.length));
-
-      summary += '$summaryText\n\n';
+                  : transcript.length)));
     }
 
+    final summaries = await Future.wait(futures);
+    for (String s in summaries) {
+      print(s);
+      summary += '$s\n\n';
+    }
     return summary;
   }
 
@@ -37,6 +42,8 @@ class SummaryRepo {
       "inputs": transcript,
       "parameters": {
         "min_length": 30,
+        "do_sample": false,
+        "use_cache": false,
       },
     };
 
