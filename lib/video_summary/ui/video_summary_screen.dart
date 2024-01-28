@@ -20,6 +20,7 @@ class SummaryScreen extends StatefulWidget {
 
 class _SummaryScreenState extends State<SummaryScreen> {
   final _summaryBloc = VideoSummaryBloc();
+  final _dialogTec = TextEditingController();
 
   @override
   void initState() {

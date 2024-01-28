@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_summariser_yt/data/hf_model_list.dart';
+import 'package:video_summariser_yt/saved_summary_list/saved_summary_list_screen.dart';
 import 'package:video_summariser_yt/video_summary/ui/video_summary_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart' as yt_iframe;
@@ -86,6 +87,10 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                 // Update the state of the app
                 // Then close the drawer
                 Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SavedSummaryListScreen()));
               },
             ),
           ],

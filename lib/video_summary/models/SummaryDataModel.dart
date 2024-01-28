@@ -4,13 +4,13 @@ part 'SummaryDataModel.g.dart';
 
 @collection
 class SummaryDataModel {
-  final Id id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
   final String summaryText;
   final String videoUrl;
   final String selectedModel;
-
-  SummaryDataModel(
-      {required this.summaryText,
-      required this.videoUrl,
-      required this.selectedModel});
+  SummaryDataModel({
+    required this.summaryText,
+    required this.videoUrl,
+    required this.selectedModel,
+  });
 }

@@ -81,6 +81,7 @@ SummaryDataModel _summaryDataModelDeserialize(
     summaryText: reader.readString(offsets[1]),
     videoUrl: reader.readString(offsets[2]),
   );
+  object.id = id;
   return object;
 }
 
@@ -111,7 +112,9 @@ List<IsarLinkBase<dynamic>> _summaryDataModelGetLinks(SummaryDataModel object) {
 }
 
 void _summaryDataModelAttach(
-    IsarCollection<dynamic> col, Id id, SummaryDataModel object) {}
+    IsarCollection<dynamic> col, Id id, SummaryDataModel object) {
+  object.id = id;
+}
 
 extension SummaryDataModelQueryWhereSort
     on QueryBuilder<SummaryDataModel, SummaryDataModel, QWhere> {
