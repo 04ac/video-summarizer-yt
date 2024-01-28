@@ -24,7 +24,8 @@ class SavedSummaryListBloc
     if (summaries.isEmpty) {
       emit(SummariesFetchedErrorState());
     } else {
-      emit(SummariesFetchedSuccessState(summaries: summaries));
+      emit(SummariesFetchedSuccessState(
+          summaries: List.from(summaries.reversed)));
     }
   }
 
