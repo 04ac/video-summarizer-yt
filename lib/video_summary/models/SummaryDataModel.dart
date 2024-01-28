@@ -1,4 +1,10 @@
+import 'package:isar/isar.dart';
+
+part 'SummaryDataModel.g.dart';
+
+@collection
 class SummaryDataModel {
+  final Id id = Isar.autoIncrement;
   final String summaryText;
   final String videoUrl;
   final String selectedModel;

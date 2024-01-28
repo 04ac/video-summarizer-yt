@@ -7,6 +7,7 @@ class SummaryScreen extends StatefulWidget {
   final String ytVideoUrl;
   final String selectedModel;
   final double partitionNum;
+
   const SummaryScreen(
       {super.key,
       required this.ytVideoUrl,
@@ -41,7 +42,28 @@ class _SummaryScreenState extends State<SummaryScreen> {
           listenWhen: (previous, current) => current is VideoSummaryActionState,
           buildWhen: (previous, current) => current is! VideoSummaryActionState,
           listener: (context, state) {
-            // TODO: implement listener
+            switch (state.runtimeType) {
+              case SummarySavedSuccessState:
+                const snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.bookmark),
+                      Text("Summary Saved."),
+                    ],
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              case SummarySaveErrorState:
+                const snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline),
+                      Text("Oops! an error occured"),
+                    ],
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
           },
           builder: (context, state) {
             switch (state.runtimeType) {
@@ -137,7 +159,14 @@ class _SummaryScreenState extends State<SummaryScreen> {
                           alignment: Alignment.bottomCenter,
                           margin: const EdgeInsets.only(bottom: 20),
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (!_summaryBloc.clicked) {
+                                _summaryBloc.add(
+                                    SaveSummaryBtnClickedActionEvent(
+                                        summary: successState.summary));
+                                _summaryBloc.clicked = true;
+                              }
+                            },
                             icon: const Icon(Icons.save),
                             label: const Text("Save Summary"),
                             style: ElevatedButton.styleFrom(

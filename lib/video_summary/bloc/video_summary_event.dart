@@ -2,6 +2,8 @@ part of 'video_summary_bloc.dart';
 
 sealed class VideoSummaryEvent {}
 
+sealed class VideoSummaryActionEvent extends VideoSummaryEvent {}
+
 class SummaryFetchEvent extends VideoSummaryEvent {
   final String transcript;
   final String videoUrl;
@@ -26,4 +28,10 @@ class GetTranscriptEvent extends VideoSummaryEvent {
     required this.selectedModel,
     required this.partitionNum,
   });
+}
+
+class SaveSummaryBtnClickedActionEvent extends VideoSummaryActionEvent {
+  final SummaryDataModel summary;
+
+  SaveSummaryBtnClickedActionEvent({required this.summary});
 }

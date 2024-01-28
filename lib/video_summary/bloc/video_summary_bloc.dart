@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:video_summariser_yt/video_summary/models/SummaryDataModel.dart';
 
 import '../repository/summary_repo.dart';
@@ -12,7 +14,10 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
   VideoSummaryBloc() : super(VideoSummaryInitial()) {
     on<SummaryFetchEvent>(summaryFetchEvent);
     on<GetTranscriptEvent>(getTranscriptEvent);
+    on<SaveSummaryBtnClickedActionEvent>(saveSummaryBtnClickedActionEvent);
   }
+
+  bool clicked = false;
 
 // facebook/bart-large-cnn
 // sshleifer/distilbart-cnn-12-6
@@ -61,5 +66,30 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
       selectedModel: event.selectedModel,
       partitionNum: event.partitionNum,
     ));
+  }
+
+  FutureOr<void> saveSummaryBtnClickedActionEvent(
+      SaveSummaryBtnClickedActionEvent event,
+      Emitter<VideoSummaryState> emit) async {
+    Isar? isar;
+    if (Isar.instanceNames.isEmpty) {
+      final dir = await getApplicationDocumentsDirectory();
+      isar = await Isar.open(
+        [SummaryDataModelSchema],
+        directory: dir.path,
+      );
+    } else {
+      isar = Isar.getInstance();
+    }
+
+    if (isar == null) {
+      emit(SummarySaveErrorState());
+    } else {
+      final summaries = isar.summaryDataModels;
+      await isar.writeTxn(() async {
+        await summaries.put(event.summary);
+      });
+      emit(SummarySavedSuccessState());
+    }
   }
 }

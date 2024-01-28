@@ -31,11 +31,65 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
         title: Text("Welcome Areen! 👋"),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: ThemeData.light().primaryColor,
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    'YT Video Summarizer',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Icon(
+                    Icons.video_collection_outlined,
+                    size: 60,
+                    color: Colors.red.shade200,
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              trailing: const Icon(
+                Icons.home_outlined,
+                color: Colors.grey,
+              ),
+              title: const Text('Home'),
+              onTap: () {
+                // Update the state of the app
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              trailing: const Icon(
+                Icons.save_outlined,
+                color: Colors.grey,
+              ),
+              title: const Text(
+                'Saved Summaries',
+              ),
+              onTap: () {
+                // Update the state of the app
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: BlocProvider(
         create: (context) => _vidDetailsBloc,

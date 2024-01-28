@@ -32,3 +32,7 @@ class GetTranscriptSuccessState extends VideoSummaryState {
       required this.videoUrl,
       required this.selectedModel});
 }
+
+class SummarySavedSuccessState extends VideoSummaryActionState {}
+
+class SummarySaveErrorState extends VideoSummaryActionState {}
