@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_summariser_yt/data/get_shared_data_from_other_apps.dart';
 import 'package:video_summariser_yt/data/hf_model_list.dart';
 import 'package:video_summariser_yt/saved_summary_list/saved_summary_list_screen.dart';
 import 'package:video_summariser_yt/video_summary/ui/video_summary_screen.dart';
@@ -18,7 +19,7 @@ class EnterVideoDetailsScreen extends StatefulWidget {
 
 class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
   final _vidDetailsBloc = EnterVideoDetailsBloc();
-  final _urltec = TextEditingController();
+  final _urlTec = TextEditingController();
 
   final _ytPlayerController = yt_iframe.YoutubePlayerController(
     params: const yt_iframe.YoutubePlayerParams(
@@ -29,10 +30,27 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
   );
 
   @override
+  void initState() {
+    // TODO: implement initState
+    GetSharedDataFromOtherApps().sharedData().then((value) {
+      setState(() {
+        String? vId = YoutubePlayer.convertUrlToId(value);
+        if (vId != null) {
+          setState(() {
+            _urlTec.text = value;
+          });
+          _ytPlayerController.cueVideoById(videoId: vId);
+        }
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome Areen! 👋"),
+        title: const Text("Welcome Areen! 👋"),
       ),
       drawer: Drawer(
         child: ListView(
@@ -127,9 +145,9 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                 prefixIcon: Icon(Icons.video_collection_outlined),
                 hintText: "Enter Video URL",
               ),
-              controller: _urltec,
+              controller: _urlTec,
               onChanged: (newVal) {
-                String vId = YoutubePlayer.convertUrlToId(_urltec.text) ?? "";
+                String vId = YoutubePlayer.convertUrlToId(_urlTec.text) ?? "";
                 _ytPlayerController.cueVideoById(videoId: vId);
               },
             ),
@@ -209,7 +227,7 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                String url = _urltec.text;
+                String url = _urlTec.text;
                 String modelSelected = _vidDetailsBloc.dropdownValue;
                 double partitionNum = _vidDetailsBloc.sliderValue * (-1.0);
                 if (url == "" || modelSelected == "Please choose a model") {

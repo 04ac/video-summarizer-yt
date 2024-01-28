@@ -158,7 +158,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              Text(successState.summary.summaryText),
+                              SelectableText(successState.summary.summaryText),
                               const SizedBox(height: 80),
                             ],
                           ),

@@ -82,7 +82,7 @@ class _SavedSummaryListItemState extends State<SavedSummaryListItem> {
             ],
           ),
           const SizedBox(height: 20),
-          Text(widget.summaries[widget.index].summaryText),
+          SelectableText(widget.summaries[widget.index].summaryText),
         ],
       ),
     );

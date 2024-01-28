@@ -42,7 +42,7 @@ class SummaryRepo {
 
     var result = jsonDecode(response.body);
 
-    return result[0]["summary_text"];
+    return result[0]["summary_text"].toString().trim();
   }
 
   // https://www.youtube.com/watch?v=VaXpJm7b-m8
