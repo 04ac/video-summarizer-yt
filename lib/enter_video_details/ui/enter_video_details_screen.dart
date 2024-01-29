@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_summariser_yt/credits/ui/credits_screen.dart';
 import 'package:video_summariser_yt/data/get_shared_data_from_other_apps.dart';
 import 'package:video_summariser_yt/data/hf_model_list.dart';
 import 'package:video_summariser_yt/saved_summary_list/saved_summary_list_screen.dart';
@@ -64,7 +65,7 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
               child: Column(
                 children: [
                   const Text(
-                    'YT Video Summarizer',
+                    'Video Summarizer YT',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -73,10 +74,9 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Icon(
-                    Icons.video_collection_outlined,
-                    size: 60,
-                    color: Colors.red.shade200,
+                  Image.asset(
+                    "assets/Design.png",
+                    width: 80,
                   ),
                 ],
               ),
@@ -121,6 +121,10 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                 // Update the state of the app
                 // Then close the drawer
                 Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreditsScreen()));
               },
             ),
           ],
