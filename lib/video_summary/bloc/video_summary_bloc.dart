@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:video_summariser_yt/theme/theme_store.dart';
 import 'package:video_summariser_yt/video_summary/models/SummaryDataModel.dart';
 
 import '../repository/summary_repo.dart';
@@ -75,7 +76,7 @@ class VideoSummaryBloc extends Bloc<VideoSummaryEvent, VideoSummaryState> {
     if (Isar.instanceNames.isEmpty) {
       final dir = await getApplicationDocumentsDirectory();
       isar = await Isar.open(
-        [SummaryDataModelSchema],
+        [SummaryDataModelSchema, ThemeStoreSchema],
         directory: dir.path,
       );
     } else {

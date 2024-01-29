@@ -38,9 +38,12 @@ class _SavedSummaryListScreenState extends State<SavedSummaryListScreen> {
                       builder: (context) => const EnterVideoDetailsScreen()))
               .whenComplete(retrieveData);
         },
-        backgroundColor: Colors.lightGreen.shade300,
+        backgroundColor: Colors.lightGreen.shade500,
         splashColor: Colors.green,
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
       ),
       body: BlocProvider(
         create: (context) => bloc,

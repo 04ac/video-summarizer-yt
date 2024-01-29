@@ -44,8 +44,8 @@ class _SavedSummaryListItemState extends State<SavedSummaryListItem> {
     return Container(
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.purple.shade50,
-        border: Border.all(color: Colors.purple.shade200, width: 3),
+        color: Theme.of(context).canvasColor,
+        border: Border.all(color: Colors.purple.shade300, width: 3),
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.all(20),

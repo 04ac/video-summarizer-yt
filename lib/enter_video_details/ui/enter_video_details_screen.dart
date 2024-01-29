@@ -8,7 +8,9 @@ import 'package:video_summariser_yt/video_summary/ui/video_summary_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart' as yt_iframe;
 
+import '../../theme/bloc/theme_bloc.dart';
 import '../bloc/enter_video_details_bloc.dart';
+import 'package:video_summariser_yt/main.dart';
 
 class EnterVideoDetailsScreen extends StatefulWidget {
   const EnterVideoDetailsScreen({super.key});
@@ -125,6 +127,16 @@ class _EnterVideoDetailsScreenState extends State<EnterVideoDetailsScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const CreditsScreen()));
+              },
+            ),
+            ListTile(
+              trailing: const Icon(
+                Icons.sunny,
+                color: Colors.grey,
+              ),
+              title: const Text('Change Theme'),
+              onTap: () {
+                MyApp.themeBloc.add(ThemeChangedEvent());
               },
             ),
           ],
