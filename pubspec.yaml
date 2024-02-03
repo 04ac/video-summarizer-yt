@@ -46,6 +46,7 @@ dependencies:
   dio: ^5.4.0
   share_plus: ^7.2.1
   url_launcher: ^6.2.4
+  envied: ^0.5.3
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ dev_dependencies:
   isar_generator: ^3.1.0+1
   build_runner: ^2.4.8
   flutter_launcher_icons: ^0.13.1
+  envied_generator: ^0.5.3
 
 flutter_launcher_icons:
   android: "launcher_icon"

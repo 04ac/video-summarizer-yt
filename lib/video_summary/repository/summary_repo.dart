@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:video_summariser_yt/secrets.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../env.dart';
 
 class SummaryRepo {
   static Future<String> getSummaryMultiplePortions(
@@ -27,7 +28,7 @@ class SummaryRepo {
     var client = http.Client();
 
     String API_URL = url;
-    const String API_TOKEN = Secrets.HF_API_TOKEN;
+    String API_TOKEN = Env.key1;
     Map<String, String> headers = {"Authorization": "Bearer $API_TOKEN"};
 
     Map<String, dynamic> payload = {
@@ -45,11 +46,10 @@ class SummaryRepo {
     return result[0]["summary_text"].toString().trim();
   }
 
-  // https://www.youtube.com/watch?v=VaXpJm7b-m8
   static Future<String> getTranscript(String videoUrl) async {
     String? extractedId = YoutubePlayer.convertUrlToId(videoUrl);
 
-    String API_URL = "${Secrets.TRANSCRIPT_API}$extractedId";
+    String API_URL = "${Env.key2}$extractedId";
 
     var client = http.Client();
 

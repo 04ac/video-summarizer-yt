@@ -44,5 +44,10 @@ app.*.map.json
 
 
 # My files
-secrets.dart
+lib/secrets.dart
 /lib/video_summary/repository/test_items.txt
+
+#Envied
+*.env
+env.g.dart
+env.dart
