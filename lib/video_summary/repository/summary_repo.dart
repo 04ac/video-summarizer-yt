@@ -25,7 +25,7 @@ class SummaryRepo {
   }
 
   static Future<String> getSummary(String url, String transcript) async {
-    var client = http.Client();
+    final client = http.Client();
 
     String API_URL = url;
     String API_TOKEN = Env.key1;
@@ -38,10 +38,10 @@ class SummaryRepo {
       },
     };
 
-    var response = await client.post(Uri.parse(API_URL),
+    final response = await client.post(Uri.parse(API_URL),
         headers: headers, body: jsonEncode(payload));
 
-    var result = jsonDecode(response.body);
+    final result = jsonDecode(response.body);
 
     return result[0]["summary_text"].toString().trim();
   }
@@ -51,11 +51,10 @@ class SummaryRepo {
 
     String API_URL = "${Env.key2}$extractedId";
 
-    var client = http.Client();
+    final client = http.Client();
+    final response = await client.get(Uri.parse(API_URL));
 
-    var response = await client.get(Uri.parse(API_URL));
-
-    var result = jsonDecode(response.body);
+    final result = jsonDecode(response.body);
 
     return result["transcript"];
   }
